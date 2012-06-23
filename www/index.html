@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real-life Games Engine</title>
+
+  	<meta name="apple-mobile-web-app-capable" content="yes" />
+  	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" /> 
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+  	<meta charset="utf-8">
+
+  	<link rel="stylesheet" href="index.css" />
+
+  	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+  	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+
+    <script src="http://static.firebase.com/v0/firebase.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script type="text/javascript">
+  	
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready", onDeviceReady, false);
+    	}
+
+    	function onDeviceReady()
+    	{
+    		// do your thing!
+    		// navigator.notification.alert("Cordova is working")
+    	}
+
+      $(document).ready(function() {
+
+        var myDataReference = new Firebase('http://gamma.firebase.com/firstlife/');
+        myDataReference.set('I am now writing data into Firebase!');
+
+      });
+      
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+      
+      <div data-role="page" id="Quests" data-dom-cache="true">
+        <div data-role="header" data-position="fixed" data-id="FixedHeader">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#Quests" data-prefetch="true" data-transition="none" class="ui-btn-active ui-state-persist">Quests</a></li>
+                    <li><a href="#Players" data-prefetch="true" data-transition="none">Players</a></li>
+                    <li><a href="#Badges" data-prefetch="true" data-transition="none">Badges</a></li>
+                    <li><a href="#Requests" data-prefetch="true" data-transition="none">Requests</a></li>
+                </ul>
+            </div>
+        </div>
+        
+  		<div data-role="content">
+			<p><a href="#SecondPage" data-transition="none" data-prefetch="true">Second Page</a></p>	
+			<p><a href="#FirstPopup" data-role="button" data-rel="dialog">First Popup</a></p>
+			<a href="dialog-buttons.html" data-role="button" data-inline="true" data-rel="dialog" data-transition="slidedown">Challenge...</a>
+            <a href="#" data-role="button" data-icon="star">Challenge</a>
+  		</div>
+          
+  	</div>
+      
+    <!----------------->
+    <!-- FIRST POPUP -->
+    <!----------------->
+  	<div data-role="page" id="FirstPopup" data-dom-cache="true">
+  		<div data-role="header" data-theme="e">
+  			<h1>Dialog</h1>
+  		</div>
+
+  		<div data-role="content" data-theme="d">
+  			<h2>Popup</h2>
+  			<p>This is the content for the popup bla balbalbla</p>
+  			<p><a href="#FirstPage" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back</a></p>
+  		</div>
+  	</div>
+
+  </body>
+</html>

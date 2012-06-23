@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'RGEClient' target in the 'RGEClient' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+#endif
