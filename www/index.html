@@ -139,7 +139,7 @@
     <div id="page" data-role="page">
       <div data-role="header"><h1>Asshole</h1></div>
       <div data-role="content">
-        <p>Some players are going to be assholes and they will earn respect by kicking others. The other players have to guess who was the asshole.</p>
+        <p>Some players are going to be assholes and can earn respect by secretly kicking others. The other players have to guess who was the asshole!</p>
         <div id="login">
           <button data-role="button" onClick="loginUser();">Login with Facebook</button>
         </div>
@@ -157,7 +157,7 @@
         <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
         <h3><span data-bind="if: localUser, text: localUser().first_name"></span> &nbsp; <span class="role-label asshole">Asshole</span></h3>
         <p>Respect: <span data-bind="if: localUser, text: localUser().score"></span></p>
-        <p>You are one of the assholes, and because you are a dick you should kick someone's ass</p>
+        <p>You are one of the assholes, get out earn some respect by kicking someone's ass!</p>
         <div style="clear:both"></div>
 
         <ul data-role="listview" data-inset="true">
@@ -268,7 +268,7 @@
     <!--  NICE GUY GOT DIALOG -->
     <div id="nice-gotit" data-role="page" class="fl-dialog">
       <div data-role="content" data-theme="a">
-        <p>Yeah that asshole <span id="got-last-kicked-guess"></span> kicked you, +10 respect and now YOU'RE AN ASSHOLE!</p>
+        <p>Yeah that asshole <span id="got-last-kicked-guess"></span> kicked you, +10 respect and now YOU'RE one of the ASSHOLES!</p>
         <a href="#ass-main" data-role="button">Great!</a>
       </div>
     </div>
