@@ -117,6 +117,26 @@
       </div>
     </div>
 
+    <!-- ASSHOLE KICK LIST -->
+    <div id="ass-list" data-role="page">
+      <div data-role="header">
+        <a href="#" data-rel="back">Back</a>
+        <h1>Pick someone to kick!</h1>
+      </div>
+      <div data-role="content">
+        <ul data-role="listview" data-inset="true" data-split-theme="a">
+          <li>
+            <a href="#leaderboard" data-transition="flip" class="ui-link-inherit">
+              <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
+              <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
+              <p class="ui-li-desc" data-bind="if: localUser, text: localUser().score"></p>
+            </a>
+          </li>
+        </ul>
+        <p>LIST OF PPL TO KICK</p>
+      </div>
+    </div>
+
     <!-- NICE MAIN -->
     <div id="nice-main" data-role="page">
       <div data-role="header">
@@ -129,7 +149,7 @@
             <a href="#leaderboard" class="ui-link-inherit">
               <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
               <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
-              <p class="ui-li-desc">2nd  40pts</p>
+              <p class="ui-li-desc" data-bind="if: localUser, text: localUser().score"></p>
             </a>
           </li>
         </ul>
