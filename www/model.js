@@ -19,32 +19,37 @@ var FLModel = {
 
 		usersRef.child(userId).transaction(function(snapshot) {
 			if(snapshot===null){
-				return { role:"", fbData: userData };
+				return { role:"", score:0, kickedBy:-1, fbData: userData };
 			}
 	  }, function(success, snapshot) {
 
 			usersRef.once("value", function(playerList) {
-					var playerList = playerList.val();
+				var playerList = playerList.val();
 
-					var role = "nice";
-					var size = arrayFromObject(playerList).length;
-					console.log('number of users: ' + size);
-				  if(size-1 % 5 == 0){
-						role = "asshole";
-					}
-					usersRef.child(userId).child("role").set(role);
+				var role = "nice";
+				var size = arrayFromObject(playerList).length;
+				console.log('number of users: ' + size);
+				if(size-1 % 5 == 0) {
+					role = "asshole";
+				}
+				usersRef.child(userId).child("role").set(role);
 			});
-			usersRef.child(userId).once('value', function(snapshot) {
-				var d = snapshot.val();
-				var data = d['fbData'];
-				data['role'] = d['role'];
-				var user = new User(data);
-				callback(user);
-			});
+
+			callback(userId);
 	  });
 
 	},
-	
+	bindUserChange: function(userId, callback) {
+		usersRef.child(userId).on('value', function(snapshot) {
+			var d = snapshot.val();
+			var data = d['fbData'];
+			data['role'] = d['role'];
+			data['score'] = d['score'];
+			data['kickedBy'] = d['kickedBy'];
+			var user = new User(data);
+			callback(user);
+		});
+	},
 	bindUsersChange: function(callback){
 		usersRef.on('value', function(snapshot) {
 			var users = arrayFromObject(snapshot.val());
@@ -52,12 +57,16 @@ var FLModel = {
 		});
 		
 	},
-
 	checkIfUserExists: function (userId) {
 	  usersRef.child(userId).once('value', function(snapshot) {
 	    var exists = (snapshot.val() !== null);
 	    //alert(exists);
 	  });
+	},
+
+	kick: function(localUser, targetId) {
+		var currentScore = localUser.score;
+		usersRef.child(localUser.id).child("score").set(currentScore + 10);
 	}
 }
 
