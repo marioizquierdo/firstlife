@@ -102,6 +102,10 @@ var FLModel = {
 		usersRef.child(targetId).child("kickedBy").set(localUser.id);
 	},
 	
+	clearKickedBy: function(localUser) {
+		usersRef.child(localUser.id).child("kickedBy").set(-1);
+	},
+	
 	bindUserKickedByChange: function(localUserId, callback) {
 		usersRef.child(localUserId).child("kickedBy").on('value', function(snapshot) {
 			var kickedBy = snapshot.val();
