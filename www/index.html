@@ -26,7 +26,6 @@
     <!-- Initialization STUFF -->
 
     <div id="fb-root"></div>
-    <div id="user-info"></div>
 
     <script>
       (function() {
@@ -58,13 +57,17 @@
       function onUserLoggedIn(response) {
         //$('#login').remove();
         //$.mobile.changePage('#ass-main'); // go to a page programatically
+        FB.api('/me', onUserFetch);
+      }
 
-        FB.api('/me', function(response) {
-          $('#user-info').html('<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name);
-					FLModel.createUser(response.id, response, function(){
-						FLModel.checkIfUserExists(response.id);
-					});
-				});
+      function onUserFetch(fbUserProfile) {
+        FLModel.createUser(fbUserProfile.id, fbUserProfile, function() {
+          FLModel.checkIfUserExists(fbUserProfile.id);
+        });
+        // Add the avatar image in the divs with class .user-avatar
+        var avatarImgHtml = '<img src="https://graph.facebook.com/' + fbUserProfile.id + '/picture"/>';
+        console.log(avatarImgHtml);
+        $('.user-avatar').html(avatarImgHtml);
       }
 
       function loginUser() {
@@ -90,6 +93,9 @@
     <div id="ass-main" data-role="page">
       <div data-role="header"><h1>Asshole</h1></div>
       <div data-role="content">
+        <div class="user-data">
+          <div class="user-avatar" />
+        </div>
         <p>You are an asshole!</p>
       </div>
     </div>
