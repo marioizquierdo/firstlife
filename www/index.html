@@ -112,16 +112,26 @@
       }
       
       $(document).bind('pagechange', function(event, data) {
-        if (data.toPage == '#leaderboard') {
-          $('#leaderboard').listview('refresh');
+        var id = data.toPage[0].id;
+        if (id == 'leaderboard') {
+          data.toPage.listview('refresh');
         }
-        else if (data.toPage == '#ass-list')
+        else if (id == 'ass-list') {
           $('#ass-list').listview('refresh');
         }
-        else if (data.toPage == '#nice-list')
+        else if (id == 'nice-list') {
           $('#nice-list').listview('refresh');
         }
       });
+      
+      function assWaitTimeout() {
+        setTimeout(function() {
+          if (location.hash.match(/#ass.*dialog/) && (FLApp.localUser().role == 'asshole')) {
+            changePage('#ass-main');
+          }
+        }, 6000);
+      }
+      
     </script>
 
 
@@ -185,7 +195,7 @@
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
           <!-- ko if: role == 'nicehole' -->
           <li style="height: 75px;">
-            <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ');FLApp.userLastKicked = \'' + $data.first_name + ' ' + $data.last_name + '\';$(\'#user-last-kicked\').text(FLApp.userLastKicked);$(\'#disc-user-last-kicked\').text(FLApp.userLastKicked);' }" href="#ass-wait" data-rel="dialog">
+            <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ');FLApp.userLastKicked = \'' + $data.first_name + ' ' + $data.last_name + '\';$(\'#user-last-kicked\').text(FLApp.userLastKicked);$(\'#disc-user-last-kicked\').text(FLApp.userLastKicked);assWaitTimeout();' }" href="#ass-wait" data-rel="dialog">
               <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
               <h3>Kick <span data-bind="text: name"></span> (he has <span data-bind="text: score"></span> respect points)</h3>
               <h4 style="position: absolute; right: 20px; top: 10px;"></h4>
@@ -245,7 +255,6 @@
       <div data-role="content" data-theme="a">
         <p>You kicked <span id="user-last-kicked"></span>, +10 respect unless they can pick you out...</p>
       </div>
-      <a href="#ass-main" data-role="button">Close</a>
     </div>
     
     <!-- ASSHOLE DISCOVERED DIALOG -->
