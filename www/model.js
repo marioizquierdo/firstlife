@@ -47,7 +47,7 @@ var FLModel = {
 					var role = "nicehole";
 					var size = arrayFromObject(playerList).length;
 					console.log('number of users: ' + size);
-					if(size-1 % 3 == 0) {
+					if((size-1) % 2 == 0) {
 						role = "asshole";
 					}
 					usersRef.child(userId).child("role").set(role);
