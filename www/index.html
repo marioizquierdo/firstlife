@@ -21,33 +21,38 @@
     <script type="text/javascript">
 
       // The root of your game data.
-      var GAME_LOCATION = 'http://gamma.firebase.com/firstlife';
+      var GAME_LOCATION = 'http://gamma.firebase.com/firstlife/';
 
       // A location under GAME_LOCATION that will store the list of players who have joined the game
-      var PLAYERS_LOCATION = 'player_list';
-
-    	function onBodyLoad()
-    	{		
-    		document.addEventListener("deviceready", onDeviceReady, false);
-    	}
-
-    	function onDeviceReady()
-    	{
-    		// do your thing!
-    		// navigator.notification.alert("Cordova is working")
-    	}
+      var PLAYERS_LOCATION = GAME_LOCATION + 'players_list/';
 
       $(document).ready(function() {
 
         var myDataReference = new Firebase(GAME_LOCATION);
         myDataReference.set('I am now writing data into Firebase!!!');
 
+        var userId = prompt('Username?', 'Guest');
+        tryCreateUser(userId, { name: userId });
       });
+
+      function tryCreateUser(userId, userData) {
+        var usersRef = new Firebase(PLAYERS_LOCATION);
+        usersRef.child(userId).transaction(function(currentUserData) {
+          if (currentUserData === null)
+            return userData;
+        }, function(success) {
+          userCreated(userId, success);
+        });
+
+        function userCreated(userId, success) {
+          
+        }
+      }
       
     </script>
   </head>
-  <body onload="onBodyLoad()">
-      
+  <body>
+
       <div data-role="page" id="Quests" data-dom-cache="true">
         <div data-role="header" data-position="fixed" data-id="FixedHeader">
             <div data-role="navbar">
@@ -69,10 +74,7 @@
           
   	</div>
       
-    <!----------------->
-    <!-- FIRST POPUP -->
-    <!----------------->
-  	<div data-role="page" id="FirstPopup" data-dom-cache="true">
+    <div data-role="page" id="FirstPopup" data-dom-cache="true">
   		<div data-role="header" data-theme="e">
   			<h1>Dialog</h1>
   		</div>
