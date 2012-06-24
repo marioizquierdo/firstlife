@@ -98,8 +98,9 @@
             FLApp.hasLoggedIn = 1;
           });
 
-          FLModel.bindUserKickedByChange(userId, function(kickedBy) {
+          FLModel.bindUserKickedByChange(userId, function(kickedBy, theGuessList) {
             FLApp.lastKickedBy = kickedBy;
+            FLApp.guessList(theGuessList);
             changePage('#nice-list');
           });
 
@@ -135,7 +136,7 @@
           if (location.hash.match(/#ass.*dialog/) && (FLApp.localUser().role == 'asshole')) {
             changePage('#ass-main');
           }
-        }, 5000);
+        }, 7000);
       }
 
     </script>
@@ -198,8 +199,9 @@
         <h1>Kick!</h1>
       </div>
       <div data-role="content">
-        <p>KICK one of these "nice guys" to gain some RESPECT</p>
-        <p>Current Respect: <span data-bind="if: localUser, text: localUser().score"></span> (+10 after kick). But take care! if he blames you, your asshole days are over.</p>
+        <h2>KICK one of these bored "nice guys" to gain some RESPECT</h2>
+        <p>You have <span data-bind="if: localUser, text: localUser().score"></span> respect points.</p>
+        <p>+10 respect points after kick, but take care! if he blames you, your asshole days are over.</p>
 
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
           <!-- ko if: role == 'nicehole' -->
@@ -260,26 +262,30 @@
       </div>
     </div>
 
-    <!-- ASSHOLE WAIT DIALOG -->
+    <!-- ASSHOLE AFTER KICK DIALOG -->
     <div id="ass-wait" data-role="page" class="fl-dialog">
       <div data-role="content" data-theme="a">
-        <p>You kicked <span id="user-last-kicked"></span>, +10 respect unless they can pick you out...</p>
+        <p>Yeah! You kicked <span id="user-last-kicked"></span>'s ass</p>
+        <p>you earned +10 respect</p>
+        <a href="#ass-main" data-role="button" data-icon="check">OK</a>
       </div>
     </div>
 
     <!-- ASSHOLE DISCOVERED DIALOG -->
     <div id="ass-discovered" data-role="page" class="fl-dialog">
       <div data-role="content" data-theme="a">
-        <p><span id="disc-user-last-kicked"></span> picked you out of the lineup, guess you're a nice guy now.</p>
+        <p>Aww man, <span id="disc-user-last-kicked"></span> picked you out of the lineup</p>
+        <p>You have to calm down and hang with nice guys now</p>
       </div>
-      <a href="#nice-main" data-role="button">Aww man</a>
+      <a href="#nice-main" data-role="button">Become a nice guy</a>
     </div>
 
     <!--  NICE GUY GOT DIALOG -->
     <div id="nice-gotit" data-role="page" class="fl-dialog">
       <div data-role="content" data-theme="a">
-        <p>Yeah that asshole <span id="got-last-kicked-guess"></span> kicked you, +10 respect and now YOU'RE one of the ASSHOLES!</p>
-        <a href="#ass-main" data-role="button">Great!</a>
+        <p>You foiled that asshole <span id="got-last-kicked-guess"></span></p>
+        <p>+20 respect, he learned the lesson and become a "nice guy" and YOU become an ASSHOLE!</p>
+        <a href="#ass-main" data-role="button">Become an asshole</a>
       </div>
     </div>
 
@@ -297,6 +303,8 @@
       FLApp = {} // app namespace to apply Knockout bindings
       FLApp.localUser = ko.observable(false);
       FLApp.allUsers = ko.observableArray(); // FLApp.players(array) // to set a new list of array
+
+      FLApp.guessList = ko.observableArray();
 
       ko.applyBindings(FLApp);
     </script>

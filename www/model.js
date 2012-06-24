@@ -110,9 +110,25 @@ var FLModel = {
 		usersRef.child(localUserId).child("kickedBy").on('value', function(snapshot) {
 			var kickedBy = snapshot.val();
 
-			if (kickedBy != -1)
-				callback(kickedBy);
+			if (kickedBy != -1) {
+				var theGuessList = FLApp.allUsers().slice();
+				var theAsshole;
+				theGuessList = _.reject(theGuessList, function(user) 
+					{ 
+						if (user.id == kickedBy) {
+							theAsshole = user;
+							return true;
+						}
+						else
+							return user.id == FLApp.localUser().id;
+					});
 
+				var others = _.shuffle(theGuessList).slice(0, 2);
+				others.push(theAsshole);
+				theGuessList = _.shuffle(others);
+
+				callback(kickedBy, theGuessList);
+			}
 		});
 	},
 	
