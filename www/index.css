@@ -1,1 +1,5 @@
 .ui-dialog.my-dialog .ui-dialog-contain { margin-top: 0 }
+
+.leaderboard-profile-img {
+  margin: 10px 0 0 10px;
+}
