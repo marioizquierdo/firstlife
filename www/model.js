@@ -14,7 +14,7 @@ function arrayFromObject(obj){
 }
 
 function addMyScoreBy(score){
-	
+
 	if(FLApp.localUser){
 		var user = FLApp.localUser();
 		usersRef.child(user.id).child("score").set(user.score + score);
@@ -31,7 +31,7 @@ function buildUser( userSnapShot ) {
 }
 
 var FLModel = {
-	
+
 	createUser: function (userId, userData, callback) {
 
 		usersRef.child(userId).transaction(function(snapshot) {
@@ -68,15 +68,15 @@ var FLModel = {
 	  });
 
 	},
-	
+
 	bindUserChange: function(userId, callback) {
 		usersRef.child(userId).on('value', function(snapshot) {
 			var user = buildUser(snapshot.val());
-						
+
 			callback(user);
-		});		
+		});
 	},
-	
+
 	bindUsersChange: function(callback){
 		usersRef.on('value', function(snapshot) {
 			var userSnapShots = arrayFromObject(snapshot.val());
@@ -84,12 +84,12 @@ var FLModel = {
 			for(i=0; i< userSnapShots.length; i++) {
 				users.push(buildUser( userSnapShots[i] ));
 			}
-			
+
 			callback(_(users).sortBy(function(user){ return -(user['score']); }));
 		});
-		
+
 	},
-	
+
 	checkIfUserExists: function (userId) {
 	  usersRef.child(userId).once('value', function(snapshot) {
 	    var exists = (snapshot.val() !== null);
@@ -101,11 +101,11 @@ var FLModel = {
 		addMyScoreBy(10);
 		usersRef.child(targetId).child("kickedBy").set(localUser.id);
 	},
-	
+
 	clearKickedBy: function(localUser) {
 		usersRef.child(localUser.id).child("kickedBy").set(-1);
 	},
-	
+
 	bindUserKickedByChange: function(localUserId, callback) {
 		usersRef.child(localUserId).child("kickedBy").on('value', function(snapshot) {
 			var kickedBy = snapshot.val();
@@ -131,25 +131,25 @@ var FLModel = {
 			}
 		});
 	},
-	
+
 	bindUserRoleChange: function(localUserId, callback) {
 		usersRef.child(localUserId).child("role").on('value', function(snapshot) {
 			callback(snapshot.val());
 		});
 	},
-	
+
 	guess: function(localUser, kickedBy, guessId) {
 		if(kickedBy == guessId){
-			addMyScoreBy(20); 
+			addMyScoreBy(20);
 			usersRef.child(localUser.id).child("kickedBy").set(-1);
-			
+
 			// swap roles
 			usersRef.child(localUser.id).child("role").set("asshole");
 			usersRef.child(kickedBy).child("role").set("nicehole");
-			
+
 			return true;
 		}else{
-			
+
 			usersRef.child(localUser.id).child("kickedBy").set(-1);
 			return false;
 		}

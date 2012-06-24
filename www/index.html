@@ -104,7 +104,7 @@
             changePage('#nice-list');
           });
 
-	  // Initial correct page
+	        // Initial correct page
           if (FLApp.localUser().role == 'asshole') {
             changePage('#ass-main');
           }
@@ -132,6 +132,32 @@
       });
 
       function assWaitTimeout() {
+        var button = $('#kick-someone-button');
+
+        // disable the button for a few seconds (cooldown time)
+        var originalText = button.text();
+        var cooldownTime = 8; // seconds to wait before kicking again
+        button.css('opacity', '0.4');
+        disableButton = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+        button.bind('click', disableButton);
+        var countdown = function() {
+          cooldownTime -= 1;
+          if (cooldownTime <= 0) {
+            button.css('opacity', '1');
+            button.unbind('click', disableButton);
+            button.text(originalText);
+          } else {
+            button.text('wait ' + cooldownTime + ' ...');
+            setTimeout(countdown, 1000);
+          }
+        };
+        countdown();
+
+        // "close dialog" automatically after a few seconds
         setTimeout(function() {
           if (location.hash.match(/#ass.*dialog/) && (FLApp.localUser().role == 'asshole')) {
             changePage('#ass-main');
@@ -161,7 +187,7 @@
     <div id="ass-main" data-role="page">
       <div data-role="header">
         <h1>Asshole</h1>
-        <a href="#leaderboard" data-icon="star" data-theme="b" class="ui-btn-right" data-transition="flip">Leaderboard</a>
+        <a href="#leaderboard" data-theme="b" class="ui-btn-right" data-transition="flip">Leaderboard</a>
       </div>
       <div data-role="content">
         <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
@@ -172,7 +198,7 @@
 
         <ul data-role="listview" data-inset="true">
           <li>
-            <a href="#ass-list" data-transition="slide">Kick someone!</a>
+            <a id="kick-someone-button" href="#ass-list" data-transition="slide">Kick someone!</a>
           </li>
         </ul>
       </div>
@@ -182,7 +208,7 @@
     <div id="nice-main" data-role="page">
       <div data-role="header">
         <h1>Nice Guy</h1>
-        <a href="#leaderboard" data-icon="star" data-theme="b" class="ui-btn-right" data-transition="flip">Leaderboard</a>
+        <a href="#leaderboard" data-theme="b" class="ui-btn-right" data-transition="flip">Leaderboard</a>
       </div>
       <div data-role="content">
         <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
