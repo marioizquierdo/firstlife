@@ -62,7 +62,7 @@
       function onUserLoggedIn(response) {
         //$('#login').remove();
         FB.api('/me', onUserFetch);
-        
+
         // Initial correct page
         if (FLApp.localUser().role == 'asshole') {
           $.mobile.changePage('#ass-main');
@@ -75,9 +75,12 @@
       function onUserFetch(fbUserProfile) {
         FLModel.createUser(fbUserProfile.id, fbUserProfile, function(userId) {
           FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
-          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#leaderboard ul:visible').listview('refresh'); });
-          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#ass-list ul:visible').listview('refresh'); });
-          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#nice-list ul:visible').listview('refresh'); });
+          FLModel.bindUsersChange(function(users) {
+            FLApp.allUsers(users);
+            $('#leaderboard ul:visible').listview('refresh');
+            $('#ass-list ul:visible').listview('refresh');
+            $('#nice-list ul:visible').listview('refresh');
+          });
           FLModel.bindUserKickedByChange(userId, function(kickedBy) {
             FLApp.lastKickedBy = kickedBy;
             $.mobile.changePage('#nice-list');
@@ -109,20 +112,19 @@
     <!-- ASSHOLE MAIN -->
     <div id="ass-main" data-role="page">
       <div data-role="header">
-        <a href="#" data-rel="back">Back</a>
-        <h1>You're the Asshole</h1>
+        <h1>The Asshole</h1>
+        <a href="#leaderboard" data-icon="gear" data-theme="b" class="ui-btn-right" data-transition="flip">Leaderboard</a>
       </div>
-      <div data-role="content" data-bind="with: localUser">
-        <div>
-          <img style="float: left; margin-right: 15px;" class="ui-corner-all" data-bind="attr: { src: fbProfileUrlBig }"/>
-          <h3 data-bind="text: first_name">Player</h3>
-          <p>position and ponits HERE</p>
-          <p>Time to kick some ass</p>
-        </div>
+      <div data-role="content">
+        <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
+        <h3 data-bind="if: localUser, text: localUser().first_name">Player</h3>
+        <p>position and ponits HERE</p>
+        <p>You are one of the assholes, and because you are a dick you should kick someone's ass</p>
+        <div style="clear:both"></div>
 
         <ul data-role="listview" data-inset="true">
           <li>
-            <a href="#ass-list" data-role="button" data-transition="slide">Kick someone!</a>
+            <a href="#ass-list" data-transition="slide">Kick someone!</a>
           </li>
         </ul>
       </div>
@@ -135,22 +137,14 @@
         <h1>Pick someone to kick!</h1>
       </div>
       <div data-role="content">
-        <ul data-role="listview" data-inset="true">
-          <li>
-            <a href="#leaderboard" data-transition="flip" class="ui-link-inherit">
-              <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
-              <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
-              <p class="ui-li-desc" data-bind="if: localUser, text: localUser().score"></p>
-            </a>
-          </li>
-        </ul>
+        <p>KICK one of these "nice guys" to gain some RESPECT</p>
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
           <!-- ko if: role == 'nicehole' -->
           <li style="padding-left: 80px; min-height: 55px;">
             <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ')' }">
-              <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
+              <img class="ui-li-thumb ui-corner-all leaderboard-pdrofile-img" data-bind="attr: { src: fbProfileUrl }"/>
               <h3 data-bind="text: name">player</h3>
-              <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
+              <h4 style="position: absolute; right: 20px; top: 10px;">respect <span data-bind="text: score">pts</span></h4>
             </a>
           </li>
           <!-- /ko -->
@@ -216,7 +210,7 @@
           <li style="padding-left: 80px; min-height: 55px;">
             <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
             <h3 data-bind="text: name">player</h3>
-            <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
+            <h4 style="position: absolute; right: 20px; top: 10px;">respect <span data-bind="text: score">pts</span></h4>
           </li>
         </ul>
       </div>
