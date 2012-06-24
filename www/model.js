@@ -56,9 +56,14 @@ var FLModel = {
 				});
 			}
 			else {
-				//usersRef.child(userId).child("kickedBy").set(-1);
-
-				callback(userId);
+				usersRef.child(userId).child("kickedBy").transaction(function(snapshot) {
+					if (snapshot != -1) {
+						return -1;
+					}
+					return snapshot;
+				}, function(success, snapshot) {
+					callback(userId);
+				});
 			}
 	  });
 
