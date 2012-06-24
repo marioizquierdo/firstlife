@@ -18,6 +18,8 @@
     <script src="http://static.firebase.com/v0/firebase.js"></script>
 
     <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+    <script type="text/javascript" charset="utf-8" src="model.js"></script>
+
   </head>
   <body>
 
@@ -57,7 +59,10 @@
 
         FB.api('/me', function(response) {
           $('#user-info').html('<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name);
-        });
+					FLModel.createUser(response.id, response, function(userId, userData){
+						alert('yeah');
+					});
+				});
       }
 
       function loginUser() {
