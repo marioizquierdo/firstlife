@@ -70,9 +70,13 @@
         FLModel.createUser(fbUserProfile.id, fbUserProfile, function(userId) {
           FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
           FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#leaderboard ul:visible').listview('refresh'); });
+<<<<<<< HEAD
           FLModel.bindUserKickedByChange(userId, function(kickedBy) {
             alert("you got kicked! guess who!");
           });
+=======
+          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#ass-list ul:visible').listview('refresh'); });
+>>>>>>> 12c90be555f57fc837a637aa995e306ee99a1c21
         });
       }
 
@@ -108,7 +112,7 @@
             <a href="#leaderboard" data-transition="flip" class="ui-link-inherit">
               <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
               <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
-              <p class="ui-li-desc">2nd  40pts</p>
+              <p class="ui-li-desc" data-bind="if: localUser, text: localUser().score"></p>
             </a>
           </li>
         </ul>
@@ -133,7 +137,13 @@
             </a>
           </li>
         </ul>
-        <p>LIST OF PPL TO KICK</p>
+        <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
+          <li data-bind="if: $data.role='nicehole'" style="padding-left: 80px; min-height: 55px;">
+            <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
+            <h3 data-bind="text: name">player</h3>
+            <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
+          </li>
+        </ul>
       </div>
     </div>
 
