@@ -29,5 +29,27 @@ User = (function() {
     this.fbProfileUrlBig = ko.observable(fbProfileUrlBig);
   }
 
+  User.prototype.leaderboardPosition = function() {
+    var self = this;
+    if (FLApp.allUsers().length > 0) {
+      var found = false;
+      var i = 0;
+      console.log('looking for my id: ', self.id);
+      _.each(FLApp.allUsers(), function() {
+        if (found == false) {
+          var user = FLApp.allUsers()[i];
+          console.log(i, ', user.id=', parseInt(user.id), ', self.id=', parseInt(self.id));
+          if (parseInt(user.id) == parseInt(self.id)) {
+            found == true;
+            console.log('found on i == ', i)
+          } else {
+            i++;
+          }
+        }
+      });
+    }
+    return i+1; // +1 because the leaderboard is 1-based index
+  };
+
   return User;
 })();

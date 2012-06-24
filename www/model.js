@@ -83,7 +83,8 @@ var FLModel = {
 			for(i=0; i< userSnapShots.length; i++) {
 				users.push(buildUser( userSnapShots[i] ));
 			}
-			callback(users);
+			
+			callback(_(users).sortBy(function(user){ return -(user['score']); }));
 		});
 		
 	},
@@ -122,7 +123,10 @@ var FLModel = {
 			// swap roles
 			usersRef.child(localUser.id).child("role").set("asshole");
 			usersRef.child(kickedBy).child("role").set("nicehole");
-		}
+			
+			return true;
+		}else
+			return false;
 	}
 }
 
