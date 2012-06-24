@@ -69,19 +69,19 @@
         //$('#login').remove();
         FB.api('/me', onUserFetch);
       }
-      
+
       function changePage(pageTo) {
         var foo = $.mobile.changePage(pageTo);
       }
-      
+
       function openDialog(pageTo) {
         var foo = $.mobile.changePage(pageTo, {transition: 'pop', role: 'dialog'});
       }
-      
+
       function onUserFetch(fbUserProfile) {
         FLModel.createUser(fbUserProfile.id, fbUserProfile, function(userId) {
-          FLModel.bindUserChange(userId, function(user) { 
-            FLApp.localUser(user); 
+          FLModel.bindUserChange(userId, function(user) {
+            FLApp.localUser(user);
           });
           FLModel.bindUsersChange(function(users) {
             FLApp.allUsers(users);
@@ -89,20 +89,20 @@
             $('#ass-list ul[data-role="listview"]:visible').listview('refresh');
             $('#nice-list ul[data-role="listview"]:visible').listview('refresh');
           });
-          
+
           FLModel.bindUserRoleChange(userId, function(newRole) {
-          
+
             if ((newRole == 'nicehole') && FLApp.hasLoggedIn) {
               openDialog('#ass-discovered');
             }
             FLApp.hasLoggedIn = 1;
           });
-          
+
           FLModel.bindUserKickedByChange(userId, function(kickedBy) {
             FLApp.lastKickedBy = kickedBy;
             changePage('#nice-list');
           });
-          
+
 	  // Initial correct page
           if (FLApp.localUser().role == 'asshole') {
             changePage('#ass-main');
@@ -116,7 +116,7 @@
       function loginUser() {
         FB.login(function(response) { }, {scope:'email'});
       }
-      
+
       $(document).bind('pagechange', function(event, data) {
         var id = data.toPage[0].id;
         if (id == 'leaderboard') {
@@ -129,7 +129,7 @@
           data.toPage.find('ul[data-role="listview"]').listview('refresh');
         }
       });
-      
+
       function assWaitTimeout() {
         setTimeout(function() {
           if (location.hash.match(/#ass.*dialog/) && (FLApp.localUser().role == 'asshole')) {
@@ -137,7 +137,7 @@
           }
         }, 5000);
       }
-      
+
     </script>
 
 
@@ -201,9 +201,10 @@
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
           <!-- ko if: role == 'nicehole' -->
           <li style="height: 75px;">
-            <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ');FLApp.userLastKicked = \'' + $data.first_name + ' ' + $data.last_name + '\';$(\'#user-last-kicked\').text(FLApp.userLastKicked);$(\'#disc-user-last-kicked\').text(FLApp.userLastKicked);openDialog(\'#ass-wait\');assWaitTimeout();' }">
+            <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ');FLApp.userLastKicked = \'' + $data.first_name + ' ' + $data.last_name + '\';$(\'#user-last-kicked\').text(FLApp.userLastKicked);$(\'#disc-user-last-kicked\').text(FLApp.userLastKicked);openDialog(\'#ass-wait\');assWaitTimeout();' } " style="padding-left: 75px;">
               <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
-              <h3>Kick <span data-bind="text: name"></span> (he has <span data-bind="text: score"></span> respect points)</h3>
+              <h3><span data-bind="text: name"></span></h3>
+              <p>he has <span data-bind="text: score"></span> respect points</p>
               <h4 style="position: absolute; right: 20px; top: 10px;"></h4>
             </a>
           </li>
@@ -255,14 +256,14 @@
         </ul>
       </div>
     </div>
-    
+
     <!-- ASSHOLE WAIT DIALOG -->
     <div id="ass-wait" data-role="page" class="fl-dialog">
       <div data-role="content" data-theme="a">
         <p>You kicked <span id="user-last-kicked"></span>, +10 respect unless they can pick you out...</p>
       </div>
     </div>
-    
+
     <!-- ASSHOLE DISCOVERED DIALOG -->
     <div id="ass-discovered" data-role="page" class="fl-dialog">
       <div data-role="content" data-theme="a">
