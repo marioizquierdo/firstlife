@@ -99,18 +99,19 @@
         <a href="#" data-rel="back">Back</a>
         <h1>You're the Asshole</h1>
       </div>
-      <div data-role="content">
-        <ul data-role="listview" data-inset="true" data-split-theme="a">
+      <div data-role="content" data-bind="with: localUser">
+        <div>
+          <img style="float: left; margin-right: 15px;" class="ui-corner-all" data-bind="attr: { src: fbProfileUrlBig }"/>
+          <h3 data-bind="text: first_name">Player</h3>
+          <p>2nd  40pts</p>
+          <p>Time to kick some ass</p>
+        </div>
+
+        <ul data-role="listview" data-inset="true">
           <li>
-            <a href="#leaderboard" data-transition="flip" class="ui-link-inherit">
-              <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
-              <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
-              <p class="ui-li-desc">2nd  40pts</p>
-            </a>
+            <a href="#ass-list" data-role="button" data-transition="slide">Kick someone!</a>
           </li>
         </ul>
-        <p>Time to kick some ass</p>
-        <a href="#ass-list" data-role="button" data-transition="slide">Kick someone!</a>
       </div>
     </div>
 
@@ -121,7 +122,7 @@
         <h1>Pick someone to kick!</h1>
       </div>
       <div data-role="content">
-        <ul data-role="listview" data-inset="true" data-split-theme="a">
+        <ul data-role="listview" data-inset="true">
           <li>
             <a href="#leaderboard" data-transition="flip" class="ui-link-inherit">
               <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
