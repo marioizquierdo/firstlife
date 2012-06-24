@@ -18,73 +18,56 @@
     <script src="http://static.firebase.com/v0/firebase.js"></script>
 
     <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
-    <script type="text/javascript">
-
-      // The root of your game data.
-      var GAME_LOCATION = 'http://gamma.firebase.com/firstlife/';
-
-      // A location under GAME_LOCATION that will store the list of players who have joined the game
-      var PLAYERS_LOCATION = GAME_LOCATION + 'players_list/';
-
-      $(document).ready(function() {
-
-        var myDataReference = new Firebase(GAME_LOCATION);
-        myDataReference.set('I am now writing data into Firebase!!!');
-
-        var userId = prompt('Username?', 'Guest');
-        tryCreateUser(userId, { name: userId });
-      });
-
-      function tryCreateUser(userId, userData) {
-        var usersRef = new Firebase(PLAYERS_LOCATION);
-        usersRef.child(userId).transaction(function(currentUserData) {
-          if (currentUserData === null)
-            return userData;
-        }, function(success) {
-          userCreated(userId, success);
-        });
-
-        function userCreated(userId, success) {
-          
-        }
-      }
-      
-    </script>
   </head>
   <body>
 
-      <div data-role="page" id="Quests" data-dom-cache="true">
-        <div data-role="header" data-position="fixed" data-id="FixedHeader">
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#Quests" data-prefetch="true" data-transition="none" class="ui-btn-active ui-state-persist">Quests</a></li>
-                    <li><a href="#Players" data-prefetch="true" data-transition="none">Players</a></li>
-                    <li><a href="#Badges" data-prefetch="true" data-transition="none">Badges</a></li>
-                    <li><a href="#Requests" data-prefetch="true" data-transition="none">Requests</a></li>
-                </ul>
-            </div>
-        </div>
-        
-  		<div data-role="content">
-			<p><a href="#SecondPage" data-transition="none" data-prefetch="true">Second Page</a></p>	
-			<p><a href="#FirstPopup" data-role="button" data-rel="dialog">First Popup</a></p>
-			<a href="dialog-buttons.html" data-role="button" data-inline="true" data-rel="dialog" data-transition="slidedown">Challenge...</a>
-            <a href="#" data-role="button" data-icon="star">Challenge</a>
-  		</div>
-          
-  	</div>
-      
-    <div data-role="page" id="FirstPopup" data-dom-cache="true">
-  		<div data-role="header" data-theme="e">
-  			<h1>Dialog</h1>
-  		</div>
+    <div id="fb-root"></div>
+    <div id="user-info"></div>
 
-  		<div data-role="content" data-theme="d">
-  			<h2>Popup</h2>
-  			<p>This is the content for the popup bla balbalbla</p>
-  			<p><a href="#FirstPage" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back</a></p>
-  		</div>
-  	</div>
+    <script>
+      (function() {
+        var e = document.createElement('script'); e.async = true;
+            e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+            document.getElementById('fb-root').appendChild(e);
+            }());
+    </script>
+
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({ appId: '450301521661226', 
+                  status: true, 
+                  cookie: true,
+                  xfbml: true,
+                  oauth: true});
+   
+        FB.Event.subscribe('auth.statusChange', handleStatusChange);
+      };
+
+      function handleStatusChange(response) {
+        document.body.className = response.authResponse ? 'connected' : 'not_connected';
+
+        if (response.authResponse) {
+          console.log(response);
+          onUserLoggedIn(response);
+        }
+      }
+    
+      function onUserLoggedIn(response) {
+        $('#login').remove();
+
+        FB.api('/me', function(response) {
+          $('#user-info').html('<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name);
+        });
+      }
+
+      function loginUser() {
+        FB.login(function(response) { }, {scope:'email'});
+      }
+    </script>
+
+    <div id="login">
+     <p><button onClick="loginUser();">Login</button></p>
+   </div>
 
   </body>
 </html>
