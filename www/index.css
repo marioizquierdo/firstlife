@@ -3,3 +3,22 @@
 .leaderboard-profile-img {
   margin: 10px 0 0 10px;
 }
+
+.role-label {
+  padding: 1px 4px 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-size: 10.998px;
+  font-weight: bold;
+  line-height: 14px;
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.role-label.nice-guy { background-color: #999; }
+
+.role-label.asshole { background-color: #3A87AD; }
+
