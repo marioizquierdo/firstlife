@@ -136,18 +136,13 @@
 
     <!-- LEADERBOARD -->
     <div id="leaderboard" data-role="page">
-      <div data-role="header">
-        <a href="#" data-rel="back">Back</a>
-        <h1>Leaderboard</h1>
-      </div>
+      <div data-role="header"><a href="#" data-rel="back">Back</a><h1>Leaderboard</h1></div>
       <div data-role="content">
-        <ul data-role="listview" data-inset="true" data-split-theme="b">
-          <li>
-            <a href="#" class="ui-link-inherit">
-              <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
-              <h3 class="ui-li-heading">Broken Bells</h3>
-              <p class="ui-li-desc">Broken Bells</p>
-            </a>
+        <ul data-role="listview" data-inset="true">
+          <li style="padding-left: 80px; min-height: 55px;">
+            <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }"/>
+            <h3 data-bind="text: localUser().name">player</h3>
+            <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: localUser().score">pts</span></h4>
           </li>
         </ul>
       </div>
