@@ -69,9 +69,9 @@
           FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
           FLModel.bindUsersChange(function(users) {
             FLApp.allUsers(users);
-            $('#leaderboard ul[data-role="listview"]').listview('refresh');
-            $('#ass-list ul[data-role="listview"]').listview('refresh');
-            $('#nice-list ul[data-role="listview"]').listview('refresh');
+            $('#leaderboard ul[data-role="listview"]:visible').listview('refresh');
+            $('#ass-list ul[data-role="listview"]:visible').listview('refresh');
+            $('#nice-list ul[data-role="listview"]:visible').listview('refresh');
           });
           FLModel.bindUserKickedByChange(userId, function(kickedBy) {
             FLApp.lastKickedBy = kickedBy;
@@ -115,7 +115,7 @@
       <div data-role="content">
         <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
         <h3><span data-bind="if: localUser, text: localUser().first_name"></span> &nbsp; <span class="role-label asshole">Asshole</span></h3>
-        <p>position and ponits HERE</p>
+        <p>Respect: <span data-bind="if: localUser, text: localUser().score"></span></p>
         <p>You are one of the assholes, and because you are a dick you should kick someone's ass</p>
         <div style="clear:both"></div>
 
@@ -136,7 +136,7 @@
       <div data-role="content">
         <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
         <h3><span data-bind="if: localUser, text: localUser().first_name"></span> &nbsp; <span class="role-label nice-guy">Nice Guy</span></h3>
-        <p>position and ponits HERE</p>
+        <p>Respect: <span data-bind="if: localUser, text: localUser().score"></span></p>
         <p>You are a nice guy and as such you can not kick people. You can earn respect by identifying the asshole if they kick you though.</p>
       </div>
     </div>
@@ -149,13 +149,15 @@
       </div>
       <div data-role="content">
         <p>KICK one of these "nice guys" to gain some RESPECT</p>
+        <p>Current Respect: <span data-bind="if: localUser, text: localUser().score"></span> (+10 after kick). But take care! if he blames you, your asshole days are over.</p>
+
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
           <!-- ko if: role == 'nicehole' -->
-          <li style="padding-left: 80px; min-height: 55px;">
+          <li style="height: 75px;">
             <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ');FLApp.userLastKicked = \'' + $data.first_name + ' ' + $data.last_name + '\';' }" href="dialog-asshole-wait.html" data-rel="dialog">
               <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
-              <h3 data-bind="text: name">player</h3>
-              <h4 style="position: absolute; right: 20px; top: 10px;">respect <span data-bind="text: score">pts</span></h4>
+              <h3>Kick <span data-bind="text: name"></span> (he has <span data-bind="text: score"></span> respect points)</h3>
+              <h4 style="position: absolute; right: 20px; top: 10px;"></h4>
             </a>
           </li>
           <!-- /ko -->
@@ -198,10 +200,10 @@
       <div data-role="header"><a href="#" data-rel="back">Back</a><h1>Leaderboard</h1></div>
       <div data-role="content">
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
-          <li style="padding-left: 80px; min-height: 55px;">
+          <li style="padding-left: 80px; min-height: 55px;" data-bind="attr: {'data-theme': ($data.id == FLApp.localUser().id) ? 'c' : 'b'}">
             <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
-            <h3 data-bind="text: name">player</h3>
-            <h4 style="position: absolute; right: 20px; top: 10px;">respect <span data-bind="text: score">pts</span></h4>
+            <h3>(<span data-bind="text: $index() + 1"></span>) <span data-bind="text: name"></span></h3>
+            <h4 style="position: absolute; right: 20px; top: 10px;">respect: <span data-bind="text: score">pts</span></h4>
           </li>
         </ul>
       </div>
