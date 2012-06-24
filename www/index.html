@@ -19,7 +19,13 @@
 
     <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
     <script type="text/javascript">
-  	
+
+      // The root of your game data.
+      var GAME_LOCATION = 'http://gamma.firebase.com/firstlife';
+
+      // A location under GAME_LOCATION that will store the list of players who have joined the game
+      var PLAYERS_LOCATION = 'player_list';
+
     	function onBodyLoad()
     	{		
     		document.addEventListener("deviceready", onDeviceReady, false);
@@ -33,8 +39,8 @@
 
       $(document).ready(function() {
 
-        var myDataReference = new Firebase('http://gamma.firebase.com/firstlife/');
-        myDataReference.set('I am now writing data into Firebase!');
+        var myDataReference = new Firebase(GAME_LOCATION);
+        myDataReference.set('I am now writing data into Firebase!!!');
 
       });
       
