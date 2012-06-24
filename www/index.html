@@ -63,6 +63,7 @@
       function onUserFetch(fbUserProfile) {
         FLModel.createUser(fbUserProfile.id, fbUserProfile, function() {
           FLModel.checkIfUserExists(fbUserProfile.id);
+
         });
         // Add the avatar image in the divs with class .user-avatar
         var avatarImgHtml = '<img src="https://graph.facebook.com/' + fbUserProfile.id + '/picture"/>';
