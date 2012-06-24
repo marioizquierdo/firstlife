@@ -4,8 +4,8 @@
     <title>Real-life Games Engine</title>
 
   	<meta name="apple-mobile-web-app-capable" content="yes" />
-  	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" /> 
-    
+  	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
   	<meta charset="utf-8">
 
@@ -23,8 +23,9 @@
   </head>
   <body>
 
+    <!-- Initialization STUFF -->
+
     <div id="fb-root"></div>
-    <div id="user-info"></div>
 
     <script>
       (function() {
@@ -36,12 +37,12 @@
 
     <script>
       window.fbAsyncInit = function() {
-        FB.init({ appId: '450301521661226', 
-                  status: true, 
+        FB.init({ appId: '450301521661226',
+                  status: true,
                   cookie: true,
                   xfbml: true,
                   oauth: true});
-   
+
         FB.Event.subscribe('auth.statusChange', handleStatusChange);
       };
 
@@ -52,16 +53,21 @@
           onUserLoggedIn(response);
         }
       }
-    
-      function onUserLoggedIn(response) {
-        $('#login').remove();
 
-        FB.api('/me', function(response) {
-          $('#user-info').html('<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name);
-					FLModel.createUser(response.id, response, function(){
-						FLModel.checkIfUserExists(response.id);
-					});
-				});
+      function onUserLoggedIn(response) {
+        //$('#login').remove();
+        //$.mobile.changePage('#ass-main'); // go to a page programatically
+        FB.api('/me', onUserFetch);
+      }
+
+      function onUserFetch(fbUserProfile) {
+        FLModel.createUser(fbUserProfile.id, fbUserProfile, function() {
+          FLModel.checkIfUserExists(fbUserProfile.id);
+        });
+        // Add the avatar image in the divs with class .user-avatar
+        var avatarImgHtml = '<img src="https://graph.facebook.com/' + fbUserProfile.id + '/picture"/>';
+        console.log(avatarImgHtml);
+        $('.user-avatar').html(avatarImgHtml);
       }
 
       function loginUser() {
@@ -69,9 +75,38 @@
       }
     </script>
 
-    <div id="login">
-     <p><button onClick="loginUser();">Login</button></p>
-   </div>
+
+    <!-- START PAGE -->
+    <div id="page" data-role="page">
+      <div data-role="header"><h1>Asshole</h1></div>
+      <div data-role="content">
+        <p>A game where you have to kick ass</p>
+        <div id="login">
+          <button data-role="button" onClick="loginUser();">Login</button>
+        </div>
+        <a href="#ass-main" data-role="button" data-transition="slide">Be an Asshole</a>
+        <a href="#nice-main" data-role="button" data-transition="slide">Be a nice man</a>
+      </div>
+    </div>
+
+    <!-- ASSHOLE MAIN -->
+    <div id="ass-main" data-role="page">
+      <div data-role="header"><h1>Asshole</h1></div>
+      <div data-role="content">
+        <div class="user-data">
+          <div class="user-avatar" />
+        </div>
+        <p>You are an asshole!</p>
+      </div>
+    </div>
+
+    <!-- ASSHOLE MAIN -->
+    <div id="nice-main" data-role="page">
+      <div data-role="header"><h1>Asshole</h1></div>
+      <div data-role="content">
+        <p>You are a nice man</p>
+      </div>
+    </div>
 
   </body>
 </html>
