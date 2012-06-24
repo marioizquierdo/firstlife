@@ -105,13 +105,15 @@
       <div data-role="content">
         <ul data-role="listview" data-inset="true" data-split-theme="a">
           <li>
-            <a href="#leaderboard" class="ui-link-inherit">
+            <a href="#leaderboard" data-transition="flip" class="ui-link-inherit">
               <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
               <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
               <p class="ui-li-desc">2nd  40pts</p>
             </a>
           </li>
         </ul>
+        <p>Time to kick some ass</p>
+        <a href="#ass-list" data-role="button" data-transition="slide">Kick someone!</a>
       </div>
     </div>
 
