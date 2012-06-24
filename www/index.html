@@ -195,7 +195,7 @@
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
           <!-- ko if: role == 'nicehole' -->
           <li style="height: 75px;">
-            <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ');FLApp.userLastKicked = \'' + $data.first_name + ' ' + $data.last_name + '\';$(\'#user-last-kicked\').text(FLApp.userLastKicked);$(\'#disc-user-last-kicked\').text(FLApp.userLastKicked);assWaitTimeout();' }" href="#ass-wait" data-rel="dialog">
+            <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ');FLApp.userLastKicked = \'' + $data.first_name + ' ' + $data.last_name + '\';$(\'#user-last-kicked\').text(FLApp.userLastKicked);$(\'#disc-user-last-kicked\').text(FLApp.userLastKicked);openDialog(\'#ass-wait\');assWaitTimeout();' }">
               <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
               <h3>Kick <span data-bind="text: name"></span> (he has <span data-bind="text: score"></span> respect points)</h3>
               <h4 style="position: absolute; right: 20px; top: 10px;"></h4>
