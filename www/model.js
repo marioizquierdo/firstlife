@@ -107,16 +107,13 @@ var FLModel = {
 			if (kickedBy != -1)
 				callback(kickedBy);
 
-			/*
-			if (kickedBy != -1) {
-				setTimeout(function() {
-					usersRef.child(localUserId).child("kickedBy").set(-1);
-				}, 5000);
-			}
-			*/
 		});
 	},
-	
+	bindUserRoleChange: function(localUserId, callback) {
+		usersRef.child(localUserId).child("role").on('value', function(snapshot) {
+			callback(snapshot.val());
+		});
+	},
 	guess: function(localUser, kickedBy, guessId) {
 		if(kickedBy == guessId){
 			addMyScoreBy(20); 
