@@ -137,9 +137,11 @@
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
           <!-- ko if: role == 'nicehole' -->
           <li style="padding-left: 80px; min-height: 55px;">
-            <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
-            <h3 data-bind="text: name">player</h3>
-            <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
+            <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ')' }">
+              <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
+              <h3 data-bind="text: name">player</h3>
+              <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
+            </a>
           </li>
           <!-- /ko -->
         </ul>
