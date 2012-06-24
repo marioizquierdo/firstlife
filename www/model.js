@@ -50,9 +50,10 @@ var FLModel = {
 					role = "asshole";
 				}
 				usersRef.child(userId).child("role").set(role);
-			});
+				usersRef.child(userId).child("kickedBy").set(-1);
 
-			callback(userId);
+				callback(userId);
+			});
 	  });
 
 	},
@@ -94,14 +95,6 @@ var FLModel = {
 
 			if (kickedBy != -1)
 				callback(kickedBy);
-
-			/*
-			if (kickedBy != -1) {
-				setTimeout(function() {
-					usersRef.child(localUserId).child("kickedBy").set(-1);
-				}, 5000);
-			}
-			*/
 		});
 	},
 	
