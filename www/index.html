@@ -15,9 +15,14 @@
   	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
   	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 
-    <script src="http://static.firebase.com/v0/firebase.js"></script>
+    <script type="text/javascript" charset="utf-8" src="http://static.firebase.com/v0/firebase.js"></script>
 
+    <script type="text/javascript" charset="utf-8" src="knockout.js"></script>
+    <script type="text/javascript" charset="utf-8" src="underscore.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
+
+
+    <script type="text/javascript" charset="utf-8" src="user.js"></script>
     <script type="text/javascript" charset="utf-8" src="model.js"></script>
 
   </head>
@@ -55,19 +60,18 @@
       }
 
       function onUserLoggedIn(response) {
-        $('#login').remove();
+        //$('#login').remove();
         //$.mobile.changePage('#ass-main'); // go to a page programatically
         FB.api('/me', onUserFetch);
       }
 
       function onUserFetch(fbUserProfile) {
-        FLModel.createUser(fbUserProfile.id, fbUserProfile, function() {
+        FLModel.createUser(fbUserProfile.id, fbUserProfile, function(user) {
           FLModel.checkIfUserExists(fbUserProfile.id);
 
         });
         // Add the avatar image in the divs with class .user-avatar
-        var avatarImgHtml = '<img src="https://graph.facebook.com/' + fbUserProfile.id + '/picture"/>';
-        console.log(avatarImgHtml);
+        var avatarImgHtml = '<img class="ui-corner-all" src="https://graph.facebook.com/' + fbUserProfile.id + '/picture"/>';
         $('.user-avatar').html(avatarImgHtml);
       }
 
@@ -95,7 +99,7 @@
       <div data-role="header"><h1>Asshole</h1></div>
       <div data-role="content">
         <div class="user-data">
-          <div class="user-avatar" />
+          <div class="user-avatar"><img data-bind="attr: {src: fbUserProfileUrl}" /></div>
         </div>
         <p>You are an asshole!</p>
       </div>
