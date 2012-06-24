@@ -111,6 +111,17 @@
         FB.login(function(response) { }, {scope:'email'});
       }
       
+      $(document).bind('pagechange', function(event, data) {
+        if (data.toPage == '#leaderboard') {
+          $('#leaderboard').listview('refresh');
+        }
+        else if (data.toPage == '#ass-list')
+          $('#ass-list').listview('refresh');
+        }
+        else if (data.toPage == '#nice-list')
+          $('#nice-list').listview('refresh');
+        }
+      });
     </script>
 
 
