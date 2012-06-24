@@ -61,7 +61,8 @@
 
       function onUserLoggedIn(response) {
         //$('#login').remove();
-        //$.mobile.changePage('#ass-main'); // go to a page programatically
+        // Stop commenting this out!!!
+	$.mobile.changePage('#ass-main'); // go to a page programatically
         FB.api('/me', onUserFetch);
       }
 
@@ -94,17 +95,29 @@
       </div>
     </div>
 
+
     <!-- ASSHOLE MAIN -->
     <div id="ass-main" data-role="page">
       <div data-role="header"><h1>Asshole</h1></div>
-      <div data-role="content">
-        <div class="user-data">
-          <div class="user-avatar"><img data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" /></div>
+      <div class="ui-grid-b">
+        <div class="ui-block-a">
+          <div class="user-avatar"><img data-bind="attr: {src: fbUserProfileUrl}" /></div>
         </div>
-        <p>You are an asshole!</p>
+	<div class="ui-block-b">
+	  <div class="user-data">
+	    johan
+	  </div>
+	  <div class="user-data">
+	    2nd place
+	  </div>
+	</div>
+	<div class="ui-block-c">
+	  <button data-role="button">Leaderboard</button>
+	</div>
       </div>
+      <p>You are an asshole!</p>
     </div>
-
+    
     <!-- ASSHOLE MAIN -->
     <div id="nice-main" data-role="page">
       <div data-role="header"><h1>Asshole</h1></div>
