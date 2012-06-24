@@ -83,7 +83,8 @@ var FLModel = {
 			for(i=0; i< userSnapShots.length; i++) {
 				users.push(buildUser( userSnapShots[i] ));
 			}
-			callback(users);
+			
+			callback(_(users).sortBy(function(user){ return -(user['score']); }));
 		});
 		
 	},
