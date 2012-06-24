@@ -71,7 +71,8 @@
           FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
           FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#ass-list ul:visible').listview('refresh'); });
           FLModel.bindUserKickedByChange(userId, function(kickedBy) {
-            alert("you got kicked! guess who!");
+            if (kickedBy != -1)
+              alert("you got kicked! guess who!");
           });
         });
       }
