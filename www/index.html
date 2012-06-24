@@ -126,6 +126,22 @@
       </div>
     </div>
 
+    <!-- Leaderboard -->
+    <div id="leaderboard" data-role="page">
+      <div data-role="header"><h1>Leaderboard</h1></div>
+      <div data-role="content">
+        <ul data-role="listview" data-inset="true" data-split-theme="a">
+          <li>
+            <a href="#" class="ui-link-inherit">
+              <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
+              <h3 class="ui-li-heading">Broken Bells</h3>
+              <p class="ui-li-desc">Broken Bells</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <script type="text/javascript">
 
       FLApp = {} // app namespace to apply Knockout bindings
