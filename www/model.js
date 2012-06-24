@@ -40,20 +40,26 @@ var FLModel = {
 			}
 	  }, function(success, snapshot) {
 
-			usersRef.once("value", function(playerList) {
-				var playerList = playerList.val();
+	  		if (snapshot.val().role == "") {
+				usersRef.once("value", function(playerList) {
+					var playerList = playerList.val();
 
-				var role = "nicehole";
-				var size = arrayFromObject(playerList).length;
-				console.log('number of users: ' + size);
-				if(size-1 % 3 == 0) {
-					role = "asshole";
-				}
-				usersRef.child(userId).child("role").set(role);
-				usersRef.child(userId).child("kickedBy").set(-1);
+					var role = "nicehole";
+					var size = arrayFromObject(playerList).length;
+					console.log('number of users: ' + size);
+					if(size-1 % 3 == 0) {
+						role = "asshole";
+					}
+					usersRef.child(userId).child("role").set(role);
+
+					callback(userId);
+				});
+			}
+			else {
+				//usersRef.child(userId).child("kickedBy").set(-1);
 
 				callback(userId);
-			});
+			}
 	  });
 
 	},
@@ -95,6 +101,14 @@ var FLModel = {
 
 			if (kickedBy != -1)
 				callback(kickedBy);
+
+			/*
+			if (kickedBy != -1) {
+				setTimeout(function() {
+					usersRef.child(localUserId).child("kickedBy").set(-1);
+				}, 5000);
+			}
+			*/
 		});
 	},
 	
