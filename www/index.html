@@ -70,6 +70,7 @@
         FLModel.createUser(fbUserProfile.id, fbUserProfile, function(userId) {
           FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
           FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#leaderboard ul:visible').listview('refresh'); });
+          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#ass-list ul:visible').listview('refresh'); });
         });
       }
 
@@ -105,7 +106,7 @@
             <a href="#leaderboard" data-transition="flip" class="ui-link-inherit">
               <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
               <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
-              <p class="ui-li-desc">2nd  40pts</p>
+              <p class="ui-li-desc" data-bind="if: localUser, text: localUser().score"></p>
             </a>
           </li>
         </ul>
