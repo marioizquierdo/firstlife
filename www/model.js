@@ -17,7 +17,7 @@ var FLModel = {
 						link: userData.link,
 						gender: userData.gender
 					};
-					usersRef.set(user);
+					usersRef.push(user);
 					callback(userId, userData);
 				});
 			}
