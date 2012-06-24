@@ -68,11 +68,11 @@
       function onUserFetch(fbUserProfile) {
         FLModel.createUser(fbUserProfile.id, fbUserProfile, function(user) {
           FLModel.checkIfUserExists(fbUserProfile.id);
-
+          FLApp.localUser(user);
         });
         // Add the avatar image in the divs with class .user-avatar
-        var avatarImgHtml = '<img class="ui-corner-all" src="https://graph.facebook.com/' + fbUserProfile.id + '/picture"/>';
-        $('.user-avatar').html(avatarImgHtml);
+        //var avatarImgHtml = '<img class="ui-corner-all" src="https://graph.facebook.com/' + fbUserProfile.id + '/picture"/>';
+        //$('.user-avatar').html(avatarImgHtml);
       }
 
       function loginUser() {
@@ -99,7 +99,7 @@
       <div data-role="header"><h1>Asshole</h1></div>
       <div data-role="content">
         <div class="user-data">
-          <div class="user-avatar"><img data-bind="attr: {src: fbUserProfileUrl}" /></div>
+          <div class="user-avatar"><img data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" /></div>
         </div>
         <p>You are an asshole!</p>
       </div>
@@ -112,6 +112,15 @@
         <p>You are a nice man</p>
       </div>
     </div>
+
+    <script type="text/javascript">
+
+      FLApp = {} // app namespace to apply Knockout bindings
+      FLApp.localUser = ko.observable(false);
+      FLApp.allUsers = ko.observableArray(); // FLApp.players(array) // to set a new list of array
+
+      ko.applyBindings(FLApp);
+    </script>
 
   </body>
 </html>
