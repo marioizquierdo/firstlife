@@ -22,7 +22,7 @@ User = (function() {
   function User(attrs) {
     _.extend(this, attrs); // assign all attributes
 
-    var fbProfileUrl = 'https://graph.facebook.com/' + this.id + '/picture&type=normal'
+    var fbProfileUrl = 'https://graph.facebook.com/' + this.id + '/picture&type=square'
     this.fbProfileUrl = ko.observable(fbProfileUrl);
   }
 
