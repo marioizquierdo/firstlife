@@ -247,25 +247,15 @@
     <!-- NICE KICKED-BY LIST -->
     <div id="nice-list" data-role="page">
       <div data-role="header">
-        <a href="#" data-rel="back">Back</a>
-        <h1>Some ASSHOLE kicked you, guess who!</h1>
+        <h1>Kicked</h1>
       </div>
       <div data-role="content">
-        <ul data-role="listview" data-inset="true">
-          <li>
-            <a href="#leaderboard" data-transition="flip" class="ui-link-inherit">
-              <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
-              <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
-              <p class="ui-li-desc" data-bind="if: localUser, text: localUser().score"></p>
-            </a>
-          </li>
-        </ul>
+        <p>Some ASSHOLE kicked you, guess who?</p>
         <ul data-role="listview" data-inset="true" data-bind="foreach: guessList">
-          <li style="padding-left: 80px; min-height: 55px;">
-            <a data-bind="attr: { onClick: 'var result = FLModel.guess(FLApp.localUser(), FLApp.lastKickedBy, ' + $data.id + ');FLApp.userLastKickedGuess = \'' + $data.first_name + ' ' + $data.last_name + '\';$(\'#got-last-kicked-guess\').text(FLApp.userLastKickedGuess);$(\'#wrong-last-kicked-guess\').text(FLApp.userLastKickedGuess);if (result) {openDialog(\'#nice-gotit\');} else {openDialog(\'#nice-wrong\');};'}">
+          <li style="min-height: 55px;">
+            <a data-bind="attr: { onClick: 'var result = FLModel.guess(FLApp.localUser(), FLApp.lastKickedBy, ' + $data.id + ');FLApp.userLastKickedGuess = \'' + $data.first_name + ' ' + $data.last_name + '\';$(\'#got-last-kicked-guess\').text(FLApp.userLastKickedGuess);$(\'#wrong-last-kicked-guess\').text(FLApp.userLastKickedGuess);if (result) {openDialog(\'#nice-gotit\');} else {openDialog(\'#nice-wrong\');};'}" style="padding-left: 75px;">
               <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
               <h3 data-bind="text: name">player</h3>
-              <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
             </a>
           </li>
         </ul>
@@ -317,7 +307,7 @@
     <div id="nice-wrong" data-role="page" class="fl-dialog">
       <div data-role="content" data-theme="a">
         <p>Nope, <span id="wrong-last-kicked-guess"></span> didn't kick you, you're just too nice.</p>
-        <a href="#nice-main" data-role="button">Shucks :(</a>
+        <a href="#nice-main" data-role="button">Still a nice guy</a>
       </div>
     </div>
 
