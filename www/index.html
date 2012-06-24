@@ -62,14 +62,6 @@
       function onUserLoggedIn(response) {
         //$('#login').remove();
         FB.api('/me', onUserFetch);
-
-        // Initial correct page
-        if (FLApp.localUser().role == 'asshole') {
-          $.mobile.changePage('#ass-main');
-        }
-        else {
-          $.mobile.changePage('#nice-main');
-        }
       }
 
       function onUserFetch(fbUserProfile) {
@@ -86,6 +78,13 @@
             $.mobile.changePage('#nice-list');
             // alert("you got kicked! guess who!");
           });
+	        // Initial correct page
+	        if (FLApp.localUser().role == 'asshole') {
+	          $.mobile.changePage('#ass-main');
+	        }
+	        else {
+	          $.mobile.changePage('#nice-main');
+	        }
         });
       }
 
