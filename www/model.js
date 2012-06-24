@@ -30,8 +30,8 @@ function buildUser( userSnapShot ) {
 	return new User(data);
 }
 
-
 var FLModel = {
+	
 	createUser: function (userId, userData, callback) {
 
 		usersRef.child(userId).transaction(function(snapshot) {
@@ -68,6 +68,7 @@ var FLModel = {
 	  });
 
 	},
+	
 	bindUserChange: function(userId, callback) {
 		usersRef.child(userId).on('value', function(snapshot) {
 			var user = buildUser(snapshot.val());
@@ -101,6 +102,10 @@ var FLModel = {
 		usersRef.child(targetId).child("kickedBy").set(localUser.id);
 	},
 	
+	clearKickedBy: function(localUser) {
+		usersRef.child(localUser.id).child("kickedBy").set(-1);
+	},
+	
 	bindUserKickedByChange: function(localUserId, callback) {
 		usersRef.child(localUserId).child("kickedBy").on('value', function(snapshot) {
 			var kickedBy = snapshot.val();
@@ -110,11 +115,13 @@ var FLModel = {
 
 		});
 	},
+	
 	bindUserRoleChange: function(localUserId, callback) {
 		usersRef.child(localUserId).child("role").on('value', function(snapshot) {
 			callback(snapshot.val());
 		});
 	},
+	
 	guess: function(localUser, kickedBy, guessId) {
 		if(kickedBy == guessId){
 			addMyScoreBy(20); 
@@ -125,8 +132,11 @@ var FLModel = {
 			usersRef.child(kickedBy).child("role").set("nicehole");
 			
 			return true;
-		}else
+		}else{
+			
+			usersRef.child(localUser.id).child("kickedBy").set(-1);
 			return false;
+		}
 	}
 }
 
