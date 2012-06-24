@@ -69,9 +69,9 @@
           FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
           FLModel.bindUsersChange(function(users) {
             FLApp.allUsers(users);
-            $('#leaderboard ul:visible').listview('refresh');
-            $('#ass-list ul:visible').listview('refresh');
-            $('#nice-list ul:visible').listview('refresh');
+            $('#leaderboard ul[data-role="listview"]').listview('refresh');
+            $('#ass-list ul[data-role="listview"]').listview('refresh');
+            $('#nice-list ul[data-role="listview"]').listview('refresh');
           });
           FLModel.bindUserKickedByChange(userId, function(kickedBy) {
             FLApp.lastKickedBy = kickedBy;
@@ -98,12 +98,10 @@
     <div id="page" data-role="page">
       <div data-role="header"><h1>Asshole</h1></div>
       <div data-role="content">
-        <p>A game where you have to kick ass</p>
+        <p>Some players are going to be assholes and they will earn respect by kicking others. The other players have to guess who was the asshole.</p>
         <div id="login">
-          <button data-role="button" onClick="loginUser();">Login</button>
+          <button data-role="button" onClick="loginUser();">Login with Facebook</button>
         </div>
-        <a href="#ass-main" data-role="button" data-transition="slide">Be an Asshole</a>
-        <a href="#nice-main" data-role="button" data-transition="slide">Be a nice man</a>
       </div>
     </div>
 
@@ -116,7 +114,7 @@
       </div>
       <div data-role="content">
         <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
-        <h3><span data-bind="if: localUser, text: localUser().first_name"></span> - <span class="role-label asshole">Asshole</span></h3>
+        <h3><span data-bind="if: localUser, text: localUser().first_name"></span> &nbsp; <span class="role-label asshole">Asshole</span></h3>
         <p>position and ponits HERE</p>
         <p>You are one of the assholes, and because you are a dick you should kick someone's ass</p>
         <div style="clear:both"></div>
@@ -126,6 +124,20 @@
             <a href="#ass-list" data-transition="slide">Kick someone!</a>
           </li>
         </ul>
+      </div>
+    </div>
+
+    <!-- NICE GUY MAIN -->
+    <div id="nice-main" data-role="page">
+      <div data-role="header">
+        <h1>Nice Guy</h1>
+        <a href="#leaderboard" data-icon="gear" data-theme="b" class="ui-btn-right" data-transition="flip">Leaderboard</a>
+      </div>
+      <div data-role="content">
+        <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
+        <h3><span data-bind="if: localUser, text: localUser().first_name"></span> &nbsp; <span class="role-label nice-guy">Nice Guy</span></h3>
+        <p>position and ponits HERE</p>
+        <p>You are a nice guy and as such you can not kick people. You can earn respect by identifying the asshole if they kick you though.</p>
       </div>
     </div>
 
@@ -148,20 +160,6 @@
           </li>
           <!-- /ko -->
         </ul>
-      </div>
-    </div>
-
-    <!-- NICE GUY MAIN -->
-    <div id="nice-main" data-role="page">
-      <div data-role="header">
-        <h1>Nice Guy</h1>
-        <a href="#leaderboard" data-icon="gear" data-theme="b" class="ui-btn-right" data-transition="flip">Leaderboard</a>
-      </div>
-      <div data-role="content">
-        <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
-        <h3><span data-bind="if: localUser, text: localUser().first_name"></span> - <span class="role-label nice-guy">Nice Guy</span></h3>
-        <p>position and ponits HERE</p>
-        <p>You are a nice guy and as such you can not kick people. You can earn respect by identifying the asshole if they kick you though.</p>
       </div>
     </div>
 
