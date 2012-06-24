@@ -44,11 +44,13 @@ var FLModel = {
 	  });
 
 	},
-	allUsers: function(callback){
-		usersRef.once('value', function(snapshot) {
+	
+	bindUsersChange: function(callback){
+		usersRef.on('value', function(snapshot) {
 			var users = arrayFromObject(snapshot.val());
-			console.log(users);
+			callback(users);
 		});
+		
 	},
 
 	checkIfUserExists: function (userId) {
