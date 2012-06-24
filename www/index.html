@@ -49,7 +49,6 @@
         document.body.className = response.authResponse ? 'connected' : 'not_connected';
 
         if (response.authResponse) {
-          console.log(response);
           onUserLoggedIn(response);
         }
       }
@@ -59,8 +58,8 @@
 
         FB.api('/me', function(response) {
           $('#user-info').html('<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name);
-					FLModel.createUser(response.id, response, function(userId, userData){
-						alert('yeah');
+					FLModel.createUser(response.id, response, function(){
+						FLModel.checkIfUserExists(response.id);
 					});
 				});
       }
