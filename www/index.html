@@ -147,7 +147,7 @@
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
           <!-- ko if: role == 'nicehole' -->
           <li style="padding-left: 80px; min-height: 55px;">
-            <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ')' }">
+            <a data-bind="attr: { onClick: 'FLModel.kick(FLApp.localUser(), ' + $data.id + ');FLApp.userLastKicked=' + $data.first_name + ' ' + $data.last_name + ';' }" href="dialog-asshole-wait.html" data-rel="dialog">
               <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
               <h3 data-bind="text: name">player</h3>
               <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
@@ -175,7 +175,7 @@
           </li>
         </ul>
       </div>
-      <p>Just wait, some asshole will probably be kicking you soon.</p>
+      <p>You just wait, one of those assholes will probably be kicking you soon.</p>
     </div>
 
     <!-- NICE KICKED-BY LIST -->
