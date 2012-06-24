@@ -61,7 +61,8 @@
 
       function onUserLoggedIn(response) {
         //$('#login').remove();
-        //$.mobile.changePage('#ass-main'); // go to a page programatically
+        // Stop commenting this out!!!
+	$.mobile.changePage('#ass-main'); // go to a page programatically
         FB.api('/me', onUserFetch);
       }
 
@@ -94,14 +95,27 @@
       </div>
     </div>
 
+
     <!-- ASSHOLE MAIN -->
     <div id="ass-main" data-role="page">
       <div data-role="header"><h1>Asshole</h1></div>
-      <div data-role="content">
-        <div class="user-data">
-          <div class="user-avatar"><img data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" /></div>
+      <div data-role="content" class="ui-grid-b">
+        <div class="ui-block-a">
+          <div class="user-avatar">
+            <img class="ui-corner-all" data-bind="if: localUser, attr: {src: localUser().fbProfileUrl}" />
+          </div>
         </div>
-        <p>You are an asshole!</p>
+        <div class="ui-block-b">
+          <div class="user-data">
+            johan
+          </div>
+          <div class="user-data">
+            2nd place
+          </div>
+        </div>
+        <div class="ui-block-c">
+          <a data-role="button" href="#leaderboard" data-transition="flip">Leaderboard</a>
+      	</div>
       </div>
     </div>
 
@@ -110,6 +124,22 @@
       <div data-role="header"><h1>Asshole</h1></div>
       <div data-role="content">
         <p>You are a nice man</p>
+      </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div id="leaderboard" data-role="page">
+      <div data-role="header"><a href="#" data-rel="back">Back</a><h1>Leaderboard</h1></div>
+      <div data-role="content">
+        <ul data-role="listview" data-inset="true" data-split-theme="a">
+          <li>
+            <a href="#" class="ui-link-inherit">
+              <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
+              <h3 class="ui-li-heading">Broken Bells</h3>
+              <p class="ui-li-desc">Broken Bells</p>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
 
