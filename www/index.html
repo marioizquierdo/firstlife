@@ -69,7 +69,10 @@
       function onUserFetch(fbUserProfile) {
         FLModel.createUser(fbUserProfile.id, fbUserProfile, function(userId) {
           FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
-          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#leaderboard ul:visible').listview('refresh'); });
+          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#ass-list ul:visible').listview('refresh'); });
+          FLModel.bindUserKickedByChange(userId, function(kickedBy) {
+            alert("you got kicked! guess who!");
+          });
         });
       }
 
@@ -103,7 +106,7 @@
         <div>
           <img style="float: left; margin-right: 15px;" class="ui-corner-all" data-bind="attr: { src: fbProfileUrlBig }"/>
           <h3 data-bind="text: first_name">Player</h3>
-          <p>2nd  40pts</p>
+          <p>position and ponits HERE</p>
           <p>Time to kick some ass</p>
         </div>
 
@@ -131,7 +134,13 @@
             </a>
           </li>
         </ul>
-        <p>LIST OF PPL TO KICK</p>
+        <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
+          <li data-bind="if: $data.role='nicehole'" style="padding-left: 80px; min-height: 55px;">
+            <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
+            <h3 data-bind="text: name">player</h3>
+            <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
+          </li>
+        </ul>
       </div>
     </div>
 
