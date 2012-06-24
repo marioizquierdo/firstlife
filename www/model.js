@@ -33,7 +33,14 @@ var FLModel = {
 						role = "asshole";
 					}
 					usersRef.child(userId).child("role").set(role);
-			  });
+			});
+			usersRef.child(userId).once('value', function(snapshot) {
+				var d = snapshot.val();
+				var data = d['fbData'];
+				data['role'] = d['role'];
+				var user = new User(data);
+				callback(user);
+			});
 	  });
 
 	},
