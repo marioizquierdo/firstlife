@@ -99,25 +99,26 @@
     <!-- ASSHOLE MAIN -->
     <div id="ass-main" data-role="page">
       <div data-role="header"><h1>Asshole</h1></div>
-      <div class="ui-grid-b">
+      <div data-role="content" class="ui-grid-b">
         <div class="ui-block-a">
-          <div class="user-avatar"><img data-bind="attr: {src: fbUserProfileUrl}" /></div>
+          <div class="user-avatar">
+            <img class="ui-corner-all" data-bind="if: localUser, attr: {src: localUser().fbProfileUrl}" />
+          </div>
         </div>
-	<div class="ui-block-b">
-	  <div class="user-data">
-	    johan
-	  </div>
-	  <div class="user-data">
-	    2nd place
-	  </div>
-	</div>
-	<div class="ui-block-c">
-	  <button data-role="button">Leaderboard</button>
-	</div>
+        <div class="ui-block-b">
+          <div class="user-data">
+            johan
+          </div>
+          <div class="user-data">
+            2nd place
+          </div>
+        </div>
+        <div class="ui-block-c">
+          <a data-role="button" href="#leaderboard" data-transition="flip">Leaderboard</a>
+      	</div>
       </div>
-      <p>You are an asshole!</p>
     </div>
-    
+
     <!-- ASSHOLE MAIN -->
     <div id="nice-main" data-role="page">
       <div data-role="header"><h1>Asshole</h1></div>
@@ -128,7 +129,7 @@
 
     <!-- Leaderboard -->
     <div id="leaderboard" data-role="page">
-      <div data-role="header"><h1>Leaderboard</h1></div>
+      <div data-role="header"><a href="#" data-rel="back">Back</a><h1>Leaderboard</h1></div>
       <div data-role="content">
         <ul data-role="listview" data-inset="true" data-split-theme="a">
           <li>
