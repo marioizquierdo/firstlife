@@ -7,11 +7,24 @@ var gamesRef = dataReference.child('games_list');
 function arrayFromObject(obj){
 	var arr = new Array(), key;
 	for (key in obj) {
-		if (obj.hasOwnProperty(key)) 
+		if (obj.hasOwnProperty(key))
 			arr.push(obj[key]);
 	}
 	return arr;
 }
+
+
+// User Class
+// var user = new User({facebookId: 1235, randomAttr: 'asdfs'});
+User = (function() {
+
+  function User(attrs) {
+    _.extend(this, attrs);
+  }
+
+  return User;
+
+})();
 
 
 var FLModel = {
@@ -22,19 +35,17 @@ var FLModel = {
 				return { role:"", fbData: userData };
 			}
 	  }, function(success, snapshot) {
-		
+
 			usersRef.once("value", function(playerList) {
-					var playerList = playerList.val(); 
-					
+					var playerList = playerList.val();
+
 					var role = "nice";
 					var size = arrayFromObject(playerList).length;
-					console.log(size);
+					console.log('number of users: ' + size);
 				  if(size-1 % 5 == 0){
 						role = "asshole";
 					}
 					usersRef.child(userId).child("role").set(role);
-					
-			   
 			  });
 	  });
 
@@ -45,6 +56,7 @@ var FLModel = {
 			console.log(users);
 		});
 	},
+
 	checkIfUserExists: function (userId) {
 	  usersRef.child(userId).once('value', function(snapshot) {
 	    var exists = (snapshot.val() !== null);
