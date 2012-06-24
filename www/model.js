@@ -88,12 +88,20 @@ var FLModel = {
 		usersRef.child(targetId).child("kickedBy").set(localUser.id);
 	},
 	
-	bindUserKickedByChange: function(userId, callback) {
-		usersRef.child(userId).child("kickedBy").on('value', function(snapshot) {
+	bindUserKickedByChange: function(localUserId, callback) {
+		usersRef.child(localUserId).child("kickedBy").on('value', function(snapshot) {
 			var kickedBy = snapshot.val();
-			if(kickedBy != -1){
+
+			if (kickedBy != -1)
 				callback(kickedBy);
+
+			/*
+			if (kickedBy != -1) {
+				setTimeout(function() {
+					usersRef.child(localUserId).child("kickedBy").set(-1);
+				}, 5000);
 			}
+			*/
 		});
 	},
 	
@@ -105,9 +113,6 @@ var FLModel = {
 			// swap roles
 			usersRef.child(localUser.id).child("role").set("asshole");
 			usersRef.child(kickedBy).child("role").set("nicehole");
-			
-			
-			
 		}
 	}
 }
