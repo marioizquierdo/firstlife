@@ -122,7 +122,10 @@ var FLModel = {
 			// swap roles
 			usersRef.child(localUser.id).child("role").set("asshole");
 			usersRef.child(kickedBy).child("role").set("nicehole");
-		}
+			
+			return true;
+		}else
+			return false;
 	}
 }
 
