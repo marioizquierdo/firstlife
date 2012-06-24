@@ -134,11 +134,13 @@
           </li>
         </ul>
         <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
-          <li data-bind="if: $data.role='nicehole'" style="padding-left: 80px; min-height: 55px;">
+          <!-- ko if: role == 'nicehole' -->
+          <li style="padding-left: 80px; min-height: 55px;">
             <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
             <h3 data-bind="text: name">player</h3>
             <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
           </li>
+          <!-- /ko -->
         </ul>
       </div>
     </div>
