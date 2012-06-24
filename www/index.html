@@ -111,12 +111,12 @@
     <!-- ASSHOLE MAIN -->
     <div id="ass-main" data-role="page">
       <div data-role="header">
-        <h1>The Asshole</h1>
+        <h1>Asshole</h1>
         <a href="#leaderboard" data-icon="gear" data-theme="b" class="ui-btn-right" data-transition="flip">Leaderboard</a>
       </div>
       <div data-role="content">
         <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
-        <h3 data-bind="if: localUser, text: localUser().first_name">Player</h3>
+        <h3><span data-bind="if: localUser, text: localUser().first_name"></span> - <span class="role-label asshole">Asshole</span></h3>
         <p>position and ponits HERE</p>
         <p>You are one of the assholes, and because you are a dick you should kick someone's ass</p>
         <div style="clear:both"></div>
@@ -151,24 +151,18 @@
       </div>
     </div>
 
-    <!-- NICE MAIN -->
+    <!-- NICE GUY MAIN -->
     <div id="nice-main" data-role="page">
       <div data-role="header">
-        <a href="#" data-rel="back">Back</a>
-        <h1>You're the Nice Guy</h1>
+        <h1>Nice Guy</h1>
+        <a href="#leaderboard" data-icon="gear" data-theme="b" class="ui-btn-right" data-transition="flip">Leaderboard</a>
       </div>
       <div data-role="content">
-        <ul data-role="listview" data-inset="true" data-split-theme="a">
-          <li>
-            <a href="#leaderboard" class="ui-link-inherit">
-              <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
-              <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
-              <p class="ui-li-desc" data-bind="if: localUser, text: localUser().score"></p>
-            </a>
-          </li>
-        </ul>
+        <img style="float: left; margin: 15px 15px 15px 0;" class="ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrlBig }"/>
+        <h3><span data-bind="if: localUser, text: localUser().first_name"></span> - <span class="role-label nice-guy">Nice Guy</span></h3>
+        <p>position and ponits HERE</p>
+        <p>You are a nice guy and as such you can not kick people. You can earn respect by identifying the asshole if they kick you though.</p>
       </div>
-      <p>You just wait, one of those assholes will probably be kicking you soon.</p>
     </div>
 
     <!-- NICE KICKED-BY LIST -->
