@@ -114,13 +114,13 @@
       $(document).bind('pagechange', function(event, data) {
         var id = data.toPage[0].id;
         if (id == 'leaderboard') {
-          data.toPage.listview('refresh');
+          data.toPage.find('ul[data-role="listview"]').listview('refresh');
         }
         else if (id == 'ass-list') {
-          $('#ass-list').listview('refresh');
+          data.toPage.find('ul[data-role="ass-list"]').listview('refresh');
         }
         else if (id == 'nice-list') {
-          $('#nice-list').listview('refresh');
+          data.toPage.find('ul[data-role="nice-list"]').listview('refresh');
         }
       });
       
@@ -129,7 +129,7 @@
           if (location.hash.match(/#ass.*dialog/) && (FLApp.localUser().role == 'asshole')) {
             changePage('#ass-main');
           }
-        }, 6000);
+        }, 5000);
       }
       
     </script>
