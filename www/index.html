@@ -66,9 +66,9 @@
       }
 
       function onUserFetch(fbUserProfile) {
-        FLModel.createUser(fbUserProfile.id, fbUserProfile, function(user) {
-          FLModel.checkIfUserExists(fbUserProfile.id);
-          FLApp.localUser(user);
+        FLModel.createUser(fbUserProfile.id, fbUserProfile, function(userId) {
+          FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
+          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); });
         });
         // Add the avatar image in the divs with class .user-avatar
         //var avatarImgHtml = '<img class="ui-corner-all" src="https://graph.facebook.com/' + fbUserProfile.id + '/picture"/>';
