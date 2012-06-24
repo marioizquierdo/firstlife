@@ -13,6 +13,23 @@ function arrayFromObject(obj){
 	return arr;
 }
 
+function addMyScoreBy(score){
+	
+	if(FLApp.localUser){
+		var user = FLApp.localUser();
+		usersRef.child(user.id).child("score").set(user.score + score);
+	}
+}
+
+function buildUser( userSnapShot ) {
+	var d = userSnapShot;
+	var data = d['fbData'];
+	data['role'] = d['role'];
+	data['score'] = d['score'];
+	data['kickedBy'] = d['kickedBy'];
+	return new User(data);
+}
+
 
 var FLModel = {
 	createUser: function (userId, userData, callback) {
@@ -26,7 +43,7 @@ var FLModel = {
 			usersRef.once("value", function(playerList) {
 				var playerList = playerList.val();
 
-				var role = "nice";
+				var role = "nicehole";
 				var size = arrayFromObject(playerList).length;
 				console.log('number of users: ' + size);
 				if(size-1 % 5 == 0) {
@@ -41,22 +58,24 @@ var FLModel = {
 	},
 	bindUserChange: function(userId, callback) {
 		usersRef.child(userId).on('value', function(snapshot) {
-			var d = snapshot.val();
-			var data = d['fbData'];
-			data['role'] = d['role'];
-			data['score'] = d['score'];
-			data['kickedBy'] = d['kickedBy'];
-			var user = new User(data);
+			var user = buildUser(snapshot.val());
+						
 			callback(user);
-		});
+		});		
 	},
+	
 	bindUsersChange: function(callback){
 		usersRef.on('value', function(snapshot) {
-			var users = arrayFromObject(snapshot.val());
+			var userSnapShots = arrayFromObject(snapshot.val());
+			var users = new Array();
+			for(i=0; i< userSnapShots.length; i++) {
+				users.push(buildUser( userSnapShots[i] ));
+			}
 			callback(users);
 		});
 		
 	},
+	
 	checkIfUserExists: function (userId) {
 	  usersRef.child(userId).once('value', function(snapshot) {
 	    var exists = (snapshot.val() !== null);
@@ -65,8 +84,31 @@ var FLModel = {
 	},
 
 	kick: function(localUser, targetId) {
-		var currentScore = localUser.score;
-		usersRef.child(localUser.id).child("score").set(currentScore + 10);
+		addMyScoreBy(10);
+		usersRef.child(localUser.id).child("kickedBy").set(localUser.id);
+	},
+	
+	bindUserKickedByChange: function(userId, callback) {
+		usersRef.child(userId).child("kickedBy").on('value', function(snapshot) {
+			var kickedBy = snapshot.val();
+			if(kickedBy != -1){
+				callback(kickedBy);
+			}
+		});
+	},
+	
+	guess: function(localUser, kickedBy, guessId) {
+		if(kickedBy == guessId){
+			addMyScoreBy(20); 
+			usersRef.child(localUser.id).child("kickedBy").set(-1);
+			
+			// swap roles
+			usersRef.child(localUser.id).child("role").set("asshole");
+			usersRef.child(kickedBy).child("role").set("nicehole");
+			
+			
+			
+		}
 	}
 }
 
