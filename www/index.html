@@ -70,8 +70,11 @@
         FLModel.createUser(fbUserProfile.id, fbUserProfile, function(userId) {
           FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
           FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#ass-list ul:visible').listview('refresh'); });
+          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#nice-list ul:visible').listview('refresh'); });
           FLModel.bindUserKickedByChange(userId, function(kickedBy) {
-            alert("you got kicked! guess who!");
+            FLApp.lastKickedBy = kickedBy;
+            $.mobile.changePage('#nice-list');
+            // alert("you got kicked! guess who!");
           });
         });
       }
@@ -163,6 +166,36 @@
               <p class="ui-li-desc" data-bind="if: localUser, text: localUser().score"></p>
             </a>
           </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- NICE KICKED-BY LIST -->
+    <div id="nice-list" data-role="page">
+      <div data-role="header">
+        <a href="#" data-rel="back">Back</a>
+        <h1>Some ASSHOLE kicked you, guess who!</h1>
+      </div>
+      <div data-role="content">
+        <ul data-role="listview" data-inset="true">
+          <li>
+            <a href="#leaderboard" data-transition="flip" class="ui-link-inherit">
+              <img class="ui-li-thumb ui-corner-all" data-bind="if: localUser, attr: { src: localUser().fbProfileUrl }" width="80" height="80"/>
+              <h3 class="ui-li-heading" data-bind="if: localUser, text: localUser().first_name"></h3>
+              <p class="ui-li-desc" data-bind="if: localUser, text: localUser().score"></p>
+            </a>
+          </li>
+        </ul>
+        <ul data-role="listview" data-inset="true" data-bind="foreach: allUsers">
+          <!-- ko if: id != FLApp.localUser().id -->
+          <li style="padding-left: 80px; min-height: 55px;">
+            <a data-bind="attr: { onClick: 'FLModel.guess(FLApp.localUser(), FLApp.lastKickedBy, ' + $data.id + ')' }">
+              <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
+              <h3 data-bind="text: name">player</h3>
+              <h4 style="position: absolute; right: 20px; top: 10px;">score <span data-bind="text: score">pts</span></h4>
+            </a>
+          </li>
+          <!-- /ko -->
         </ul>
       </div>
     </div>
