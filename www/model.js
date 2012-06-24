@@ -85,7 +85,7 @@ var FLModel = {
 
 	kick: function(localUser, targetId) {
 		addMyScoreBy(10);
-		usersRef.child(localUser.id).child("kickedBy").set(localUser.id);
+		usersRef.child(targetId).child("kickedBy").set(localUser.id);
 	},
 	
 	bindUserKickedByChange: function(userId, callback) {
