@@ -61,14 +61,21 @@
 
       function onUserLoggedIn(response) {
         //$('#login').remove();
-        // Stop commenting this out!!!
-        $.mobile.changePage('#ass-main'); // go to a page programatically
         FB.api('/me', onUserFetch);
+        
+        // Initial correct page
+        if (FLApp.localUser().role == 'asshole') {
+          $.mobile.changePage('#ass-main');
+        }
+        else {
+          $.mobile.changePage('#nice-main');
+        }
       }
 
       function onUserFetch(fbUserProfile) {
         FLModel.createUser(fbUserProfile.id, fbUserProfile, function(userId) {
           FLModel.bindUserChange(userId, function(user) { FLApp.localUser(user); });
+          FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#leaderboard ul:visible').listview('refresh'); });
           FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#ass-list ul:visible').listview('refresh'); });
           FLModel.bindUsersChange(function(users) { FLApp.allUsers(users); $('#nice-list ul:visible').listview('refresh'); });
           FLModel.bindUserKickedByChange(userId, function(kickedBy) {
@@ -168,6 +175,7 @@
           </li>
         </ul>
       </div>
+      <p>Just wait, some asshole will probably be kicking you soon.</p>
     </div>
 
     <!-- NICE KICKED-BY LIST -->
