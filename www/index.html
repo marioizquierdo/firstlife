@@ -42,7 +42,13 @@
 
     <script>
       window.fbAsyncInit = function() {
-        FB.init({ appId: '450301521661226',
+
+        var theAppId = "450301521661226";
+
+        if (document.location.hostname.match(/dropbox/) != null)
+          theAppId = "368126586585821";
+
+        FB.init({ appId: theAppId,
                   status: true,
                   cookie: true,
                   xfbml: true,
