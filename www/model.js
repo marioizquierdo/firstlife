@@ -1,5 +1,9 @@
 var GAME_LOCATION = 'http://gamma.firebase.com/firstlife/';
 var dataReference = new Firebase(GAME_LOCATION);
+var room = getURLParameter("room");
+if( room != "null"){
+	dataReference = new Firebase(GAME_LOCATION+room+"/");
+}
 
 var usersRef = dataReference.child('users_list');
 var gamesRef = dataReference.child('games_list');
@@ -28,6 +32,12 @@ function buildUser( userSnapShot ) {
 	data['score'] = d['score'];
 	data['kickedBy'] = d['kickedBy'];
 	return new User(data);
+}
+
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
 }
 
 var FLModel = {
