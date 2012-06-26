@@ -20,7 +20,7 @@
     <script type="text/javascript" charset="utf-8" src="knockout.js"></script>
     <script type="text/javascript" charset="utf-8" src="underscore.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova-1.8.1.js"></script>
-
+    <script type="text/javascript" charset="utf-8" src="idle.js"></script>
 
     <script type="text/javascript" charset="utf-8" src="user.js"></script>
     <script type="text/javascript" charset="utf-8" src="model.js"></script>
@@ -37,6 +37,7 @@
         var e = document.createElement('script'); e.async = true;
             e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
             document.getElementById('fb-root').appendChild(e);
+						
             }());
     </script>
 
@@ -165,6 +166,18 @@
         }, 7000);
       }
 
+		  // Use away/back events created by idle.js to update our status information.;
+		  document.onAway = function () {
+				if(FLApp.localUser)
+		    	FLModel.setUserStatus(FLApp.localUser().id,'away');
+		  }
+		  document.onBack = function (isIdle, isAway) {
+		    if(FLApp.localUser)
+					FLModel.setUserStatus(FLApp.localUser().id,'online');
+		  }
+
+		  setAwayTimeout(10000);
+
     </script>
 
 
@@ -273,6 +286,9 @@
           <li style="padding-left: 80px; min-height: 55px;" data-bind="attr: {'data-theme': ($data.id == FLApp.localUser().id) ? 'c' : 'b'}">
             <img class="ui-li-thumb ui-corner-all leaderboard-profile-img" data-bind="attr: { src: fbProfileUrl }"/>
             <h3>(<span data-bind="text: $index() + 1"></span>) <span data-bind="text: name"></span></h3>
+						<!-- ko if: status  -->
+						<h3 data-bind="text: status, css: {'status-online': status == 'online', 'status-away': status == 'away'}"></h3>
+	          <!-- /ko -->
             <h4 style="position: absolute; right: 20px; top: 10px;"><span data-bind="text: score">pts</span></h4>
           </li>
         </ul>

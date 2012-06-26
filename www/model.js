@@ -31,6 +31,7 @@ function buildUser( userSnapShot ) {
 	data['role'] = d['role'];
 	data['score'] = d['score'];
 	data['kickedBy'] = d['kickedBy'];
+	data['status'] = d['status']? d['status']: 'online';
 	return new User(data);
 }
 
@@ -56,7 +57,6 @@ var FLModel = {
 
 					var role = "nicehole";
 					var size = arrayFromObject(playerList).length;
-					console.log('number of users: ' + size);
 					if((size-1) % 2 == 0) {
 						role = "asshole";
 					}
@@ -75,6 +75,9 @@ var FLModel = {
 					callback(userId);
 				});
 			}
+			usersRef.child(userId).removeOnDisconnect();
+			FLModel.setUserStatus(userId,'online');
+			
 	  });
 
 	},
@@ -163,6 +166,12 @@ var FLModel = {
 			usersRef.child(localUser.id).child("kickedBy").set(-1);
 			return false;
 		}
+	},
+	
+	setUserStatus: function(userId, status) {
+	  usersRef.child(userId).child('status').transaction(function(snapshot){
+			return status;
+		});
 	}
 }
 
